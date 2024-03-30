@@ -54,4 +54,4 @@ const SellInfoSchema = new mongoose.Schema({
     }
   ]
 }, { timestamps: true });
-module.exports = sellInfo = mongoose.model("SellInfo", ClientInfoSchema);
+module.exports = sellInfo = mongoose.model("SellInfo", SellInfoSchema);

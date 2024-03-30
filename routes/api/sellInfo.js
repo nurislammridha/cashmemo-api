@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
           status: true,
         });
       }
-    });
+    }).populate('clientInfo');
   } catch (error) {
     res.status(500).send("Server error");
   }
