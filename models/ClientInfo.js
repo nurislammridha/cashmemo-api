@@ -17,5 +17,5 @@ const ClientInfoSchema = new mongoose.Schema({
     default: 0,
     require: false,
   },
-});
+}, { timestamps: true });
 module.exports = clientInfo = mongoose.model("ClientInfo", ClientInfoSchema);

@@ -8,5 +8,5 @@ const ProductInfoSchema = new mongoose.Schema({
     type: Number,
     require: true,
   }
-});
+}, { timestamps: true });
 module.exports = ProductInfo = mongoose.model("ProductInfo", ProductInfoSchema);
