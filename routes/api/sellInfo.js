@@ -40,7 +40,7 @@ router.get("/", async (req, res) => {
           status: true,
         });
       }
-    }).populate('clientInfo');
+    }).populate('clientInfo').sort({ createdAt: 'desc' });
   } catch (error) {
     res.status(500).send("Server error");
   }
@@ -66,40 +66,62 @@ router.get("/:id", async (req, res) => {
 
 //Update sell
 router.put("/:id", async (req, res) => {
-  await SellInfo.updateOne(
-    { _id: req.params.id },
-    {
-      $set: req.body,
-    },
-    (err) => {
+  const { clientId, currentDue } = req.body
+  try {
+    await ClientInfo.updateOne(
+      { _id: clientId },
+      {
+        $set: { due: currentDue },
+      }
+    );
+    await SellInfo.updateOne(
+      { _id: req.params.id },
+      {
+        $set: req.body,
+      },
+      (err) => {
+        if (err) {
+          res.status(500).json({
+            error: "There was a server side error!",
+          });
+        } else {
+          res.status(200).json({
+            message: "Sell info. were updated successfully!",
+            status: true,
+          });
+        }
+      }
+    );
+  } catch (error) {
+    res.status(500).send("Server error");
+  }
+});
+
+
+//delete sell
+router.delete("/:id", async (req, res) => {
+  // const { clientId, currentDue } = req.body
+  try {
+    // await ClientInfo.updateOne(
+    //   { _id: clientId },
+    //   {
+    //     $set: { due: currentDue },
+    //   }
+    // );
+    await SellInfo.deleteOne({ _id: req.params.id }, (err) => {
       if (err) {
         res.status(500).json({
           error: "There was a server side error!",
         });
       } else {
         res.status(200).json({
-          message: "Memo were updated successfully!",
+          message: "Client was deleted successfully!",
           status: true,
         });
       }
-    }
-  );
-});
-
-
-//delete sell
-router.delete("/:id", async (req, res) => {
-  await SellInfo.deleteOne({ _id: req.params.id }, (err) => {
-    if (err) {
-      res.status(500).json({
-        error: "There was a server side error!",
-      });
-    } else {
-      res.status(200).json({
-        message: "Client was deleted successfully!",
-        status: true,
-      });
-    }
-  });
+    });
+  } catch (error) {
+    res.status(500).send("Server error");
+  }
 });
 module.exports = router;

@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
           status: true,
         });
       }
-    });
+    }).sort({ createdAt: 'desc' });
   } catch (error) {
     res.status(500).send("Server error");
   }
@@ -55,7 +55,28 @@ router.get("/:id", async (req, res) => {
     }
   });
 });
-
+//due
+router.post("/due", async (req, res) => {
+  const { clientId, amount } = req.body
+  await ClientInfo.updateOne(
+    { _id: clientId },
+    {
+      $set: { due: amount },
+    },
+    (err) => {
+      if (err) {
+        res.status(500).json({
+          error: "There was a server side error!",
+        });
+      } else {
+        res.status(200).json({
+          message: "Client due was updated successfully!",
+          status: true,
+        });
+      }
+    }
+  );
+});
 //Update product
 router.put("/:id", async (req, res) => {
   await ClientInfo.updateOne(
@@ -77,6 +98,7 @@ router.put("/:id", async (req, res) => {
     }
   );
 });
+
 // Update product presentPricePerUnit
 router.put("/presentPricePerUnit/:id", async (req, res) => {
   await ClientInfo.updateOne(

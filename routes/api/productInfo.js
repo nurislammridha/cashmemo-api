@@ -32,7 +32,7 @@ router.get("/", async (req, res) => {
           status: true,
         });
       }
-    });
+    }).sort({ createdAt: 'desc' });
   } catch (error) {
     res.status(500).send("Server error");
   }

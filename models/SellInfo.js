@@ -17,6 +17,10 @@ const SellInfoSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
+  discount: {
+    type: Number,
+    require: true,
+  },
   total: {
     type: Number,
     require: true,
