@@ -12,6 +12,11 @@ const ClientInfoSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  tel: {
+    type: String,
+    require: false,
+    default: ""
+  },
   due: {
     type: Number,
     default: 0,

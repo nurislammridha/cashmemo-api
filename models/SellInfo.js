@@ -13,19 +13,27 @@ const SellInfoSchema = new mongoose.Schema({
     type: Number,
     require: true,
   },
-  currentDue: {
+  currentDue: {//grandTotal+previousDue-pay
     type: Number,
     require: true,
+  },
+  vat: {
+    type: Number,
+    default: 0,
+  },
+  serviceCharge: {
+    type: Number,
+    default: 0,
   },
   discount: {
     type: Number,
     require: true,
   },
-  total: {
+  total: {//all product
     type: Number,
     require: true,
   },
-  grandTotal: {
+  grandTotal: {//after calculating  total+vat-discount+serviceCharge
     type: Number,
     require: true,
   },
@@ -54,6 +62,14 @@ const SellInfoSchema = new mongoose.Schema({
       quantity: {
         type: Number,
         require: true,
+      },
+      unit: {
+        type: String,
+        default: "PCS",
+      },
+      warranty: {
+        type: String,
+        default: "No",
       }
     }
   ]

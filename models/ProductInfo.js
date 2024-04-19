@@ -7,6 +7,14 @@ const ProductInfoSchema = new mongoose.Schema({
   productMRP: {
     type: Number,
     require: true,
-  }
+  },
+  unit: {
+    type: String,
+    default: "PCS",
+  },
+  warranty: {
+    type: String,
+    default: "No",
+  },
 }, { timestamps: true });
 module.exports = ProductInfo = mongoose.model("ProductInfo", ProductInfoSchema);
